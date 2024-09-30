@@ -10,6 +10,7 @@ import Products from "./pages/Products.jsx";
 import Product from "./pages/Product.jsx";
 import Register from "./pages/Register.jsx";
 import Admin from "./pages/Admin.jsx";
+import Test from "./pages/Test.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: "products/:id", element: <Product /> },
       { path: "contact", element: <Contact></Contact> },
+      { path: "test", element: <Test /> },
     ],
   },
   { path: "/admin", element: <Admin /> },

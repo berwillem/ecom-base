@@ -94,3 +94,24 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ message: "cannot get users" });
   }
 };
+
+// user count
+exports.getUsersCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// delete user :
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByIdAndDelete(id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: "cannot delete user" });
+  }
+};

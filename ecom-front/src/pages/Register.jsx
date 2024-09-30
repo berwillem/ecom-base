@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -7,6 +8,7 @@ export default function Register() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("test");
@@ -15,6 +17,7 @@ export default function Register() {
         .post("http://localhost:5000/api/v1/auth/register", user)
         .then((res) => {
           alert("Registered successfully");
+          navigate("/login");
         })
         .catch((err) => {
           console.log(err);

@@ -1,6 +1,11 @@
+import axios from "axios";
 import gsap from "gsap";
+import { useState } from "react";
 import { useRef, useLayoutEffect } from "react";
+import Swal from "sweetalert2";
+
 export default function Home() {
+  const [email, setEmail] = useState("");
   const comp = useRef(null);
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -11,14 +16,24 @@ export default function Home() {
         delay: 0.3,
       }).from(["#title-1", "#title-2", "#title-3"], {
         opacity: 0,
-        y:"+=30",
+        y: "+=30",
         stagger: 0.5,
-        
-      })
-
+      });
     }, comp);
     return () => ctx.revert();
   }, []);
+  const subscribe = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/api/v1/newsletter", { email })
+      .then(() => {
+        Swal.fire({
+          title: "Good job!",
+          text: "You have successfully subscribed!",
+          icon: "success",
+        });
+      });
+  };
   return (
     <div className="relative" ref={comp}>
       <div
@@ -39,6 +54,18 @@ export default function Home() {
         <h1 id="welcome" className="text-9xl font-bold text-gray-100">
           welcome
         </h1>
+      </div>
+
+      <div className="newsletter">
+        <h1>newsletter</h1>
+        <form onSubmit={subscribe}>
+          <input
+            type="email"
+            placeholder="enter you email "
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button className="bg-gray-100 p-2 rounded">Subscribe</button>
+        </form>
       </div>
     </div>
   );

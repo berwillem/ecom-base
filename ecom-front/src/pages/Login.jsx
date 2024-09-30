@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -12,6 +15,7 @@ export default function Login() {
         localStorage.setItem("isloggedIn", true);
         localStorage.setItem("isAdmin", res.data.user.isAdmin);
         localStorage.setItem("token", res.data.token);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
